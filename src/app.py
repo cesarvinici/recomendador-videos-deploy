@@ -22,6 +22,10 @@ def main():
     st.write('''Uma vez por mês o modelo será treinado novamente com vídeos os videos antigos e novos de forma a melhorar cada vez mais o score
     com base em vídeos que eu forem marcados como Gostei ou Não Gostei.''')
 
+    st.markdown("[Clique aqui para acessar o repositório do projeto.](https://github.com/cesarvinici/recomendador-videos-deploy)")
+
+    st.markdown("---")
+
 
     st.header("Ultimas recomendações: ")
     videos = []
