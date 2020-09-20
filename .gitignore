@@ -1,3 +1,4 @@
 modelos/*.pkl.z
 .vscode/
 src/data/*.json
+__pycache__

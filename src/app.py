@@ -3,6 +3,7 @@ from settings import SRC_DIR, DATA_DIR, ROOT_DIR
 import json
 import os
 import re
+from run_backend import add_single_video
 from DAO.database import Database
 
 def main():
@@ -25,11 +26,19 @@ def main():
     st.markdown("[Clique aqui para acessar o repositório do projeto.](https://github.com/cesarvinici/recomendador-videos-deploy)")
 
     st.markdown("---")
-
-
-    st.header("Ultimas recomendações: ")
-    videos = []
     database = Database()
+    # if st.button("Adicionar vídeo",):
+    youtube_video_url = st.text_input('Insira o link do vídeo:')
+    if(youtube_video_url):
+        if(add_single_video(youtube_video_url)):
+            st.write("Vídeo adicionado com sucesso!")
+
+
+    
+    st.header("Ultimas recomendações: ")
+
+    videos = []
+    
     videos = database.show_videos()
     for video in videos:  
         id, title, video_link, thumbnail, score, liked = video

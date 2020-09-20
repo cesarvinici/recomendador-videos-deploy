@@ -33,21 +33,23 @@ class Database:
         video = self._conn.execute(query.format(video_link=link))
         return video.fetchone()
 
-    def save_recomendation(self, video_info):
+    def save_recomendation(self, video_info, liked = 0):
         ''' check if video already exists '''
         video_exists = self.get_by_link(video_info['video_id'])
 
         if video_exists:
             return True
 
-        query = '''INSERT INTO {recomender} (video_title, video_link, thumbnail, score) values 
-                                ("{video_title}", "{video_link}", "{thumbnail}", {score})
+        query = '''INSERT INTO {recomender} (video_title, video_link, thumbnail, score, liked) values 
+                                ("{video_title}", "{video_link}", "{thumbnail}", {score}, {liked})
                 '''
+
         new_video = self._conn.execute(query.format(recomender=self.RECOMENDER_TABLE,
                                                     video_title=video_info['title'].replace('"', "'"),
                                                     video_link=video_info['video_id'],
                                                     thumbnail=video_info['thumbnail'],
-                                                    score=video_info['score']))
+                                                    score=video_info['score'],
+                                                    liked=liked))
     
     def like_video(self, value, video_id):
         """" Edit liked column """
@@ -55,7 +57,3 @@ class Database:
         query = '''update {recomender} set liked = {liked}, updated_at = '{updated_at}'  where id = {video_id}'''
         print(query.format(recomender=self.RECOMENDER_TABLE, liked=value, updated_at=time, video_id=video_id))
         self._conn.execute(query.format(recomender=self.RECOMENDER_TABLE, liked=value, updated_at=time, video_id=video_id))
-
-if __name__ == '__main__':
-    teste = Database()
-    teste.like_video(1, 9)
