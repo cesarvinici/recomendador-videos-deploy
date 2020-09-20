@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run clean_deploy/src/app.py
+web: sh setup.sh && streamlit run src/app.py
