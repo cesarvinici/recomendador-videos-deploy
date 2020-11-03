@@ -28,7 +28,7 @@ def main():
     st.markdown("---")
     database = Database()
     # if st.button("Adicionar vídeo",):
-    youtube_video_url = st.text_input('Insira o link do vídeo:')
+    youtube_video_url = st.sidebar.text_input('Insira um link para adicionar vídeo manualmente:')
     if(youtube_video_url):
         if(add_single_video(youtube_video_url)):
             st.write("Vídeo adicionado com sucesso!")
@@ -39,11 +39,18 @@ def main():
 
     videos = []
     
-    videos = database.show_videos()
-    for video in videos:  
+    qtd_videos = st.sidebar.text_input('Qtd. de vídeos que deseja mostrar:')
+    if qtd_videos: 
+        videos = database.show_videos(qtd_videos)
+    else:
+        videos = database.show_videos()
+
+    count = 0
+    for video in videos:
+        count += 1  
         id, title, video_link, thumbnail, score, liked = video
         score = round(score * 100, 2)
-        st.markdown("[{title}](https://youtube.com/{url})".format(title=title, url=video_link))
+        st.markdown("[{count} - {title}](https://youtube.com/{url})".format(count=count, title=title, url=video_link))
         st.write(
         f'<iframe width="680" height="400" src="https://youtube.com/embed/{video_id(video_link)}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
         unsafe_allow_html=True,
