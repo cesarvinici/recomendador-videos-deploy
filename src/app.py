@@ -39,8 +39,9 @@ def main():
 
     videos = []
     
-    qtd_videos = st.sidebar.text_input('Qtd. de vídeos que deseja mostrar:')
+    qtd_videos = st.sidebar.number_input('Qtd. de vídeos que deseja mostrar:', min_value=1, max_value=1000, format='%d')
     if qtd_videos: 
+        qtd_videos = 1 if int(qtd_videos) < 1 else qtd_videos
         videos = database.show_videos(qtd_videos)
     else:
         videos = database.show_videos()
